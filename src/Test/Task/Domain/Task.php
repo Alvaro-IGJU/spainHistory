@@ -3,41 +3,36 @@
 namespace App\Test\Task\Domain;
 
 use App\Test\Task\Application\TaskResponse;
+use App\Test\Task\Infrastructure\TaskRepository;
+use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
-    /**
-     * @var int|null $id
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
 
-    /**
-     * @var string $title
-     */
-    private $title;
-
-    /**
-     * @param int|null $id
-     * @param string $title
-     */
-    public function __construct(?int $id, string $title)
-    {
-        $this->id = $id;
-        $this->title = $title;
-    }
-
-
-
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
+    #[ORM\Column(length: 255)]
+    private ?string $title = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
+    }
     public static function createFromArray(TaskResponse $tasks)
     {
 
@@ -54,9 +49,9 @@ class Task
 
     public static function createToObject($data){
 
-        return  new self(null,$data['title']);
+       $task= new Task();
+       $task->setTitle($data['title']);
+       return $task;
 
     }
-
-
 }

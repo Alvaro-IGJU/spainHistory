@@ -2,8 +2,9 @@
 
 namespace App\Test\Task\Infrastructure;
 
-use App\Entity\Task;
+
 use App\Test\Task\Application\TaskResponse;
+use App\Test\Task\Domain\Task;
 use App\Test\Task\Domain\TaskRespository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -33,9 +34,8 @@ class TaskRepository extends ServiceEntityRepository implements TaskRespository
     public function store($task): bool
     {
         try{
-            $taskObject = new Task();
-            $taskObject->setTitle($task['title']);
 
+            $taskObject= Task::createToObject($task);
             $this->getEntityManager()->persist($taskObject);
           $this->getEntityManager()->flush();
             return true;
