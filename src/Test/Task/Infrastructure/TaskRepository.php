@@ -26,20 +26,21 @@ class TaskRepository extends ServiceEntityRepository implements TaskRespository
         parent::__construct($registry, Task::class);
     }
 
-    public function getBy(array $criteria):TaskResponse
+    public function getBy(array $criteria): TaskResponse
     {
         $response = $this->findBy($criteria);
         return new TaskResponse($response);
     }
+
     public function store($task): bool
     {
-        try{
+        try {
 
-            $taskObject= Task::createToObject($task);
+            $taskObject = Task::createToObject($task);
             $this->getEntityManager()->persist($taskObject);
-          $this->getEntityManager()->flush();
+            $this->getEntityManager()->flush();
             return true;
-        }catch (\Exception $exception){
+        } catch (\Exception $exception) {
             throw new Exception($exception->getMessage());
         }
 
@@ -70,7 +71,6 @@ class TaskRepository extends ServiceEntityRepository implements TaskRespository
 //            ->getOneOrNullResult()
 //        ;
 //    }
-
 
 
 }
