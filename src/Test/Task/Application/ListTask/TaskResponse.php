@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Test\Task\Application;
+namespace App\Test\Task\Application\ListTask;
 class TaskResponse
 {
     /**

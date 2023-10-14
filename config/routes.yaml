@@ -18,4 +18,9 @@ task-store:
     methods: [ POST ]
     options:
         expose: true
-
+task-delete:
+    path: /task-delete
+    controller: App\Controller\Task\TaskDeleteController
+    methods: [ POST ]
+    options:
+        expose: true

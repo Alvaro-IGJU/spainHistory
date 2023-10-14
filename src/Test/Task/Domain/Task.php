@@ -2,7 +2,7 @@
 
 namespace App\Test\Task\Domain;
 
-use App\Test\Task\Application\TaskResponse;
+use App\Test\Task\Application\ListTask\TaskResponse;
 use App\Test\Task\Infrastructure\TaskRepository;
 use Doctrine\ORM\Mapping as ORM;
 

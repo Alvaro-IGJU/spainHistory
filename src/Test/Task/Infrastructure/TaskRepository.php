@@ -3,7 +3,8 @@
 namespace App\Test\Task\Infrastructure;
 
 
-use App\Test\Task\Application\TaskResponse;
+use App\Test\Task\Application\DeleteTask\TaskDeleteResponse;
+use App\Test\Task\Application\ListTask\TaskResponse;
 use App\Test\Task\Domain\Task;
 use App\Test\Task\Domain\TaskRespository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -46,6 +47,38 @@ class TaskRepository extends ServiceEntityRepository implements TaskRespository
 
     }
 
+    public function delete(int $id): TaskDeleteResponse
+    {
+        try {
+
+            $taskDelete= $this->getEntityManager()->find(Task::class,$id);
+            if($taskDelete){
+                $this->getEntityManager()->remove($taskDelete);
+                $this->getEntityManager()->flush();
+                return new TaskDeleteResponse(true);
+            }
+
+        } catch (\Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+        return new TaskDeleteResponse(false);
+    }
+
+    public function update(array $task): bool
+    {
+        try {
+
+            $taskObject=$this->getEntityManager()->find(Task::class,$task['id']);
+            $taskObject->setTitle($task['title']);
+
+            $this->getEntityManager()->persist($taskObject);
+            $this->getEntityManager()->flush();
+            return true;
+        } catch (\Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
+
 
 //    /**
 //     * @return Task[] Returns an array of Task objects
@@ -71,6 +104,7 @@ class TaskRepository extends ServiceEntityRepository implements TaskRespository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
 
 
 }

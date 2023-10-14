@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Test\Task\Application\StoreTask;
-
+namespace App\Test\Task\Application\DeleteTask;
 
 use App\Test\Task\Infrastructure\TaskRepository;
 use Exception;
 
-class TaskStoreCommandHandler
+class TaskDeleteCommandHandler
 {
+
     /**
      * @var TaskRepository $taskRepository
      */
@@ -21,22 +21,22 @@ class TaskStoreCommandHandler
         $this->taskRepository = $taskRepository;
     }
 
-    public function handler($data): TaskStoreResponse
+
+    public function handler($id):TaskDeleteResponse
     {
         try {
-            if(is_null($data['id'])){
-                $resultResponse = $this->taskRepository->store($data);
-            }else{
-                $resultResponse=$this->taskRepository->update($data);
-            }
 
-
+            $taskResponse = $this->taskRepository->delete($id);
 
         } catch (\Exception $exception) {
             throw new Exception($exception->getMessage());
         }
 
-        return new TaskStoreResponse($resultResponse);
+        return new TaskDeleteResponse($taskResponse->isResponse());
+
     }
+
+
+
 
 }

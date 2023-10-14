@@ -1,7 +1,6 @@
 Documentation for auth user  with symfony(login):
 
 
-https://smoqadam.me/posts/how-to-authenticate-user-in-symfony-5-by-jwt/
 
 #   NEW PROYECT
 composer create-project symfony/skeleton:"6.3.*" my_project_directory
@@ -9,7 +8,10 @@ cd my_project_directory
 composer require webapp
 composer require --dev symfony/maker-bundle
 composer require symfony/orm-pack
+composer require symfony/security-bundle
 
+https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/4-cors-requests.html
+composer require nelmio/cors-bundle
 
 
 
