@@ -19,7 +19,7 @@ class TaskStoreController
     }
     public function __invoke(Request $request):JsonResponse
     {
-                $items = ($request->getContent());
+        $items = ($request->getContent());
         $data = json_decode($items, true);
         $response = $this->handler->handler($data);
         return new JsonResponse($response->isResponse());

@@ -24,3 +24,10 @@ task-delete:
     methods: [ POST ]
     options:
         expose: true
+
+add-user:
+    path: /add-user
+    controller: App\Controller\User\RegistrationController
+    methods: [ POST ]
+    options:
+        expose: true
