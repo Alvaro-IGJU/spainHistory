@@ -136,5 +136,8 @@
             "config/packages/twig.yaml",
             "templates/base.html.twig"
         ]
+    },
+    "twc/maker-bundle": {
+        "version": "v1.1.3"
     }
 }

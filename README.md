@@ -61,4 +61,16 @@ symfony server:start
 CHANGE VERSION PHP
 
 * sudo update-alternatives --config php
---------------------------------------
+------------------------------------------
+
+
+
+Opciones de crear entidades dentro de la estructuta sin aplicar maker-bundler 
+
+1. 
+
+php bin/console make:entity '\App\Test\Person\Domain\Person'
+
+2. Ver ejemplo en fichero packages\dev\twc_maker.yaml:
+
+composer require twc/maker-bundle --dev

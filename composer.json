@@ -71,6 +71,7 @@
         }
     },
     "require-dev": {
-        "symfony/maker-bundle": "^1.51"
+        "symfony/maker-bundle": "^1.51",
+        "twc/maker-bundle": "^1.1"
     }
 }

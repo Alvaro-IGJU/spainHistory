@@ -1,0 +1,7 @@
+twc_maker:
+  entity:
+    - { context: 'test', target_entity: 'App\Test', target_repository: 'App\Test' }
+  controller:
+    - { context: 'test', target: 'App\Test' }
+  form:
+    - { context: 'test', target: 'App\Test'                                    }
