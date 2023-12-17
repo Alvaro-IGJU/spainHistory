@@ -24,6 +24,7 @@ class TaskStoreCommandHandler
     public function handler($data): TaskStoreResponse
     {
         try {
+
             if(is_null($data['id'])){
                 $resultResponse = $this->taskRepository->store($data);
             }else{

@@ -25,14 +25,15 @@ php bin/console doctrine:database:create
 
 # CREATE TABLES:
 
-
+php bin/console cache:clear
 php bin/console doctrine:schema:create
 php bin/console doctrine:schema:update --force
 
 INSTALL SYMFONY CLI:
-
+ https://symfony.com/download
 curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
-T
+sudo apt install symfony-cli
+
 
 CREATE TABLE:
 php bin/console make:entity 'nombre'
@@ -53,5 +54,11 @@ yarn watch
 
 init proyect:
 
+
 symfony server:start
 
+-------------------------------------------
+CHANGE VERSION PHP
+
+* sudo update-alternatives --config php
+--------------------------------------
