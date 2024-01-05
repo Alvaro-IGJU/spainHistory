@@ -3,6 +3,7 @@
 namespace App\Test\User\Domain;
 
 use App\Test\User\Infrastructure\UserRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -24,8 +25,9 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string',unique: true)]
     private string $password;
 
-    #[ORM\Column(type: 'string')]
-    private string $apiToken;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $apiToken = null;
+
 
     public function getId(): ?int
     {
@@ -113,7 +115,7 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
         return $this->apiToken;
     }
 
-    public function setApiToken(string $apiToken): void
+    public function setApiToken(string $apiToken)
     {
         $this->apiToken = $apiToken;
     }
