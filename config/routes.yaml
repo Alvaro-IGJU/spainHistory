@@ -31,3 +31,9 @@ add-user:
     methods: [ POST ]
     options:
         expose: true
+login:
+    path: /login
+    controller: App\Controller\User\LoginController
+    methods: [ POST ]
+    options:
+        expose: true

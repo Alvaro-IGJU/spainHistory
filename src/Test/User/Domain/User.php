@@ -21,8 +21,11 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'json')]
     private array $roles = [];
 
-    #[ORM\Column(type: 'string')]
+    #[ORM\Column(type: 'string',unique: true)]
     private string $password;
+
+    #[ORM\Column(type: 'string')]
+    private string $apiToken;
 
     public function getId(): ?int
     {
@@ -104,4 +107,17 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
+
+    public function getApiToken(): string
+    {
+        return $this->apiToken;
+    }
+
+    public function setApiToken(string $apiToken): void
+    {
+        $this->apiToken = $apiToken;
+    }
+
+
+
 }

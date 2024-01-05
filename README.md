@@ -65,7 +65,7 @@ CHANGE VERSION PHP
 
 
 
-Opciones de crear entidades dentro de la estructuta sin aplicar maker-bundler 
+# Opciones de crear entidades dentro de la estructuta sin aplicar maker-bundler 
 
 1. 
 
@@ -74,3 +74,13 @@ php bin/console make:entity '\App\Test\Person\Domain\Person'
 2. Ver ejemplo en fichero packages\dev\twc_maker.yaml:
 
 composer require twc/maker-bundle --dev
+
+-------------------------------------------------
+# Barra de herramientas para dev 
+
+composer require --dev symfony/profiler-pack
+
+--------------------------------------------------
+# authentification jwt for token
+
+https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/index.html
