@@ -46,7 +46,20 @@ class TaskRepository extends ServiceEntityRepository implements TaskRespository
         }
 
     }
+    public function update($task): bool
+    {
+        try {
 
+            $taskObject=$this->getEntityManager()->find(Task::class,$task['id']);
+            $taskObject->setTitle($task['title']);
+
+            $this->getEntityManager()->persist($taskObject);
+            $this->getEntityManager()->flush();
+            return true;
+        } catch (\Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
     public function delete(int $id): TaskDeleteResponse
     {
         try {
@@ -64,20 +77,7 @@ class TaskRepository extends ServiceEntityRepository implements TaskRespository
         return new TaskDeleteResponse(false);
     }
 
-    public function update(array $task): bool
-    {
-        try {
 
-            $taskObject=$this->getEntityManager()->find(Task::class,$task['id']);
-            $taskObject->setTitle($task['title']);
-
-            $this->getEntityManager()->persist($taskObject);
-            $this->getEntityManager()->flush();
-            return true;
-        } catch (\Exception $exception) {
-            throw new Exception($exception->getMessage());
-        }
-    }
 
 
 //    /**

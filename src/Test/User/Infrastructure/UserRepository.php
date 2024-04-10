@@ -70,4 +70,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         return true;
     }
+
+    public function updateUser(User $user): bool
+    {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+
+        return true;
+    }
 }
