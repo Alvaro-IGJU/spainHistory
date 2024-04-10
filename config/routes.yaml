@@ -31,3 +31,36 @@ add-user:
     methods: [ POST ]
     options:
         expose: true
+
+app_logout:
+    path: /logout
+    methods: GET
+
+
+product:
+    path: /product
+    controller: App\Controller\Product\ProductController
+    methods: [ GET ]
+    options:
+        expose: true
+
+product-store:
+    path: /product-store
+    controller: App\Controller\Product\ProductStoreController
+    methods: [ POST ]
+    options:
+        expose: true
+
+product-delete:
+    path: /product-delete
+    controller: App\Controller\Product\ProductDeleteController
+    methods: [ POST ]
+    options:
+        expose: true
+##
+#login:
+#    path: /login
+#    controller: App\Security\SecurityController
+#    methods: [ POST ]
+#    options:
+#        expose: true

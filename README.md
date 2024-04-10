@@ -1,5 +1,3 @@
-Documentation for auth user  with symfony(login):
-
 
 
 #   NEW PROYECT
@@ -17,8 +15,7 @@ composer require nelmio/cors-bundle
 
 # CREATE DATABASES:
 
-Si es necesario cuando no encuentra en driver
-sudo apt install php7.3-mysql
+
 
 php bin/console doctrine:database:create
 
@@ -32,10 +29,7 @@ php bin/console doctrine:schema:update --force
 INSTALL SYMFONY CLI:
 
 curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | sudo -E bash
-T
 
-CREATE TABLE:
-php bin/console make:entity 'nombre'
 
 
 
@@ -53,5 +47,14 @@ yarn watch
 
 init proyect:
 
+migrations:
+php bin/console doctrine:migrations:diff
+php bin/console doctrine:migrations:migrate
+php bin/console cache:clear
+
+
 symfony server:start
 
+# eixample for create entity :
+
+*   php bin/console make:entity '\App\Test\User\Domain\User'

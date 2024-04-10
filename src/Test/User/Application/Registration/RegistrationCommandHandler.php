@@ -40,6 +40,7 @@ class RegistrationCommandHandler
         );
         $user->setPassword($hashedPassword);
         $user->setEmail($data['email']);
+        $user->setRoles(['ROLE_USER']);
 
         $response = $this->userRepository->addUser($user);
 

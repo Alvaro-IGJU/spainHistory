@@ -31,7 +31,6 @@ class TaskStoreCommandHandler
             }
 
 
-
         } catch (\Exception $exception) {
             throw new Exception($exception->getMessage());
         }

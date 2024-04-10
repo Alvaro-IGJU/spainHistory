@@ -20,18 +20,38 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'json')]
     private array $roles = [];
-
+    /**
+     * @var string The hashed password
+     */
     #[ORM\Column(type: 'string')]
     private string $password;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $name = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
+ private ?string $username = null;
+    public function __toString(): string
+    {
+        return $this->email;
+    }
 
     public function getEmail(): ?string
     {
         return $this->email;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(?string $username): void
+    {
+        $this->username = $username;
     }
 
     public function setEmail(string $email): self
@@ -103,5 +123,17 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+
+    public function setName(?string $name): static
+    {
+        $this->name = $name;
+
+        return $this;
     }
 }
