@@ -1,0 +1,33 @@
+vich_uploader:
+    db_driver: orm
+    metadata:
+        type: attribute
+    mappings:
+        admin_document:
+            namer: vich_uploader.namer_origname
+            uri_prefix: '%admin_documents_folder%'
+            upload_destination: '%kernel.project_dir%/public%admin_documents_folder%'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+        admin_image:
+            namer: vich_uploader.namer_origname
+            uri_prefix: ''
+            upload_destination: '%kernel.project_dir%/public%admin_images_folder%'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+        document:
+            namer: vich_uploader.namer_origname
+            uri_prefix: '%documents_folder%'
+            upload_destination: '%kernel.project_dir%/public%documents_folder%'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true
+        image:
+            namer: vich_uploader.namer_origname
+            uri_prefix: ''
+            upload_destination: '%kernel.project_dir%/public%images_folder%'
+            inject_on_load: false
+            delete_on_update: true
+            delete_on_remove: true

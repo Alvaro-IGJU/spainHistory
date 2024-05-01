@@ -4,9 +4,11 @@ namespace App\Test\Product\Domain;
 
 
 use App\Test\Product\Application\ListProduct\ProductResponse;
+use App\Test\Product\Domain\Service\FileUploader;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Test\Product\Infrastructure\ProductRepository;
+
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
@@ -15,6 +17,9 @@ class Product
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
+
+    #[ORM\Column(type: 'string',nullable: true)]
+    private ?string $brochureFilename;
 
     #[ORM\Column(length: 255)]
     private ?string $name = null;
@@ -27,6 +32,19 @@ class Product
 
     #[ORM\Column(nullable: true)]
     private ?float $IVA = null;
+
+    public function getBrochureFilename(): ?string
+    {
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename(string $brochureFilename): self
+    {
+
+        $this->brochureFilename = $brochureFilename;
+
+        return $this;
+    }
 
     public function getId(): ?int
     {
@@ -89,16 +107,24 @@ class Product
          * @var Product $item
          */
         foreach ($productResponse->getProducts() as $item) {
-            $responseArray[] = ['id' => $item->getId(), 'name' => $item->getName(),'description' => $item->getDescription(),'price' => $item->getPrice(),'iva' => $item->getIVA()];
+            $responseArray[] = ['id' => $item->getId(), 'name' => $item->getName(), 'description' => $item->getDescription(), 'price' => $item->getPrice(), 'iva' => $item->getIVA()];
         }
         return $responseArray;
 
     }
 
 
-    public static function createToObject($data){
+    public static function createToObject($data)
+    {
 
-        $product= new Product();
+        $product = new Product();
+
+
+        if ($data['file']) {
+
+            $product->setBrochureFilename($data['file']);
+        }
+
         $product->setName($data['name']);
         $product->setDescription($data['description']);
         $product->setPrice($data['price']);

@@ -43,12 +43,16 @@ class ProductRepository extends ServiceEntityRepository implements \App\Test\Pro
 
         $data = [];
         foreach ($paginator as $item) {
+            /**
+             * @var Product $item
+             */
             $data[] = [
                 'id' => $item->getId(),
                 'name' => $item->getName(),
                 'price' => $item->getPrice(),
                 'description' => $item->getDescription(),
                 'iva' => $item->getIva(),
+                'image'=>  $item->getBrochureFilename()
             ];
         }
         return [

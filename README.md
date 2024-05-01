@@ -55,6 +55,6 @@ php bin/console cache:clear
 
 symfony server:start
 
-# eixample for create entity :
+# example for create entity :
 
 *   php bin/console make:entity '\App\Test\User\Domain\User'
