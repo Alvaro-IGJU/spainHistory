@@ -15,9 +15,9 @@ composer require nelmio/cors-bundle
 
 # CREATE DATABASES:
 
-
-
 php bin/console doctrine:database:create
+
+
 
 
 # CREATE TABLES:

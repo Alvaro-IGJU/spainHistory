@@ -42,6 +42,11 @@ class ProductStoreController extends AbstractController
                 }
 
             }
+
+            if($request->get('image')){
+                $imageFile=true;
+                $newFilename=$request->get('image');
+            }
             $data = ['IVA' => $iva, 'description' => $description, 'name' => $name,
                 'price' => floatval($price), 'id' => $id, 'file' => $imageFile ? $newFilename : null];
             $response = $this->handler->handler($data);
