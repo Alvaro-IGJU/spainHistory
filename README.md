@@ -12,14 +12,6 @@ https://symfony.com/bundles/LexikJWTAuthenticationBundle/current/4-cors-requests
 composer require nelmio/cors-bundle
 
 
-
-# CREATE DATABASES:
-
-php bin/console doctrine:database:create
-
-
-
-
 # CREATE TABLES:
 
 
@@ -45,7 +37,6 @@ npm run watch
 yarn add vue-loader --dev --force
 yarn watch
 
-init proyect:
 
 migrations:
 php bin/console doctrine:migrations:diff
@@ -58,3 +49,15 @@ symfony server:start
 # example for create entity :
 
 *   php bin/console make:entity '\App\Test\User\Domain\User'
+
+## RUN API
+
+1. composer install
+2. Configuration in file .env user/pass database name TEST: DATABASE_URL="mysql://root:dexter1310@127.0.0.1:3306/TEST?serverVersion=5.7"
+3. php bin/console doctrine:database:create
+4. php bin/console doctrine:migrations:migrate
+5. symfony server:start
+
+
+
+
