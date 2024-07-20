@@ -3,35 +3,42 @@
 namespace App\Controller;
 
 use App\Test\User\Domain\User;
-
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
+    private $jwtManager;
+
+    public function __construct(JWTTokenManagerInterface $jwtManager)
+    {
+        $this->jwtManager = $jwtManager;
+    }
 
     #[Route('/login', name: 'app_login', methods: ['POST'])]
-    public function login(#[CurrentUser] User $user = null,AuthenticationUtils $authenticationUtils): JsonResponse
+    public function login(#[CurrentUser] ?User $user, AuthenticationUtils $authenticationUtils): JsonResponse
     {
-        $error = $authenticationUtils->getLastAuthenticationError();
+        if (null === $user) {
+            return new JsonResponse(['message' => 'Invalid credentials'], JsonResponse::HTTP_UNAUTHORIZED);
+        }
 
-                 $lastUsername = $authenticationUtils->getLastUsername();
-        $sessionToken = bin2hex(random_bytes(32));
+        // Generar el token JWT
+        $token = $this->jwtManager->create($user);
+
         return new JsonResponse([
-            'session_token' => $user?$sessionToken:'no existe el usuario',
-            'last_username' => $lastUsername,
-            'user'=>$user->getEmail(),
-            'error' => $error,
+            'token' => $token,
+            'user' => $user->getEmail(),
         ]);
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
-    public function logout():JsonResponse
+    public function logout(): JsonResponse
     {
-        return new JsonResponse(['exit'=>'success']);
+        // Symfony se encarga de la lógica de logout automáticamente
+        return new JsonResponse(['message' => 'Logged out successfully']);
     }
 }

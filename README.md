@@ -59,5 +59,8 @@ symfony server:start
 5. symfony server:start
 
 
+## PERSONAL SCRIPTS
+
+~/scripts/structure_ddd.sh src/Test/Entity
 
 

@@ -2,7 +2,9 @@
 
 namespace App\Test\User\Domain;
 
+use App\Test\Article\Domain\Article;
 use App\Test\User\Infrastructure\UserRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -28,6 +30,10 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
+
+    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Article::class)]
+    private Collection $articles;
+
 
     public function getId(): ?int
     {
@@ -135,5 +141,13 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
     }
 }

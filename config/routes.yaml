@@ -26,7 +26,7 @@ task-delete:
         expose: true
 
 add-user:
-    path: /add-user
+    path: /register
     controller: App\Controller\User\RegistrationController
     methods: [ POST ]
     options:
@@ -57,10 +57,38 @@ product-delete:
     methods: [ POST ]
     options:
         expose: true
-##
-#login:
-#    path: /login
-#    controller: App\Security\SecurityController
-#    methods: [ POST ]
-#    options:
-#        expose: true
+
+category:
+    path: /category
+    controller: App\Controller\Category\CategoryController
+    methods: [ GET ]
+    options:
+        expose: true
+
+category-store:
+    path: /category-store
+    controller: App\Controller\Category\CategoryStoreController
+    methods: [ POST ]
+    options:
+        expose: true
+
+article:
+    path: /article
+    controller: App\Controller\Article\ArticleController
+    methods: [ GET ]
+    options:
+        expose: true
+
+article-store:
+    path: /article-store
+    controller: App\Controller\Article\ArticleStoreController
+    methods: [ POST ]
+    options:
+        expose: true
+
+login:
+    path: /login
+    controller: App\Security\SecurityController
+    methods: [ POST ]
+    options:
+        expose: true

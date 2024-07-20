@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Controller\Product;
+namespace App\Controller\Category;
 
-use App\Test\Product\Application\ListProduct\ProductCommandHandler;
+use App\Test\Category\Application\ListCategory\CategoryCommandHandler;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ProductController
+class CategoryController
 {
-    private ProductCommandHandler $handler;
+    private CategoryCommandHandler $handler;
 
     /**
-     * @param ProductCommandHandler $handler
+     * @param CategoryCommandHandler $handler
      */
-    public function __construct(ProductCommandHandler $handler)
+    public function __construct(CategoryCommandHandler $handler)
     {
         $this->handler = $handler;
     }
@@ -24,7 +24,7 @@ class ProductController
         $itemsPerPage = $request->query->getInt('itemsPerPage', 10);
         $filter = $request->query->getString('filter', '');
         $response = $this->handler->handler(['page'=>$page, 'itemsPerPage'=>$itemsPerPage,'filter'=>$filter]);
-        return new JsonResponse(['listProducts' => $response->getProducts()]);
+        return new JsonResponse(['listCategories' => $response->getCategories()]);
     }
 
 
