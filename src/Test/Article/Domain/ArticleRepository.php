@@ -10,7 +10,7 @@ interface ArticleRepository
 {
 
     public function getByArticle(array $criteria):ArticleResponse;
-    public  function getPaginatedData(int $page, int $itemsPerPage, string $filter): array;
+    public  function getPaginatedData(int $page, int $itemsPerPage, string $filter, int $userId = null): array;
 
     public function storeArticle(array $article, UserRepository $userRepository): bool;
 

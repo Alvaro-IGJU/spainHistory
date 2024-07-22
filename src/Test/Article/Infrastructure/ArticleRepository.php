@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Test\Article\Infrastructure;
 
 use App\Test\Article\Application\DeleteArticle\ArticleDeleteResponse;
@@ -24,17 +23,22 @@ class ArticleRepository extends ServiceEntityRepository implements \App\Test\Art
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Article::class);
-
     }
 
-
-    public function getPaginatedData(int $page, int $itemsPerPage, string $filter): array
+    public function getPaginatedData(int $page, int $itemsPerPage, string $filter = '', int $userId = null): array
     {
         $query = $this->createQueryBuilder('a');
-        if ($filter != '') {
-            $query->andWhere('a.title LIKE :filter')->orWhere('a.content LIKE :filter')
+
+        if ($filter !== '') {
+            $query->andWhere('a.title LIKE :filter OR a.content LIKE :filter')
                 ->setParameter('filter', '%' . $filter . '%');
         }
+
+        if ($userId !== null && $userId !== 0) {
+            $query->andWhere('a.user = :userId')
+                ->setParameter('userId', $userId);
+        }
+
         $query->orderBy('a.id', 'ASC')
             ->getQuery();
 
@@ -52,9 +56,10 @@ class ArticleRepository extends ServiceEntityRepository implements \App\Test\Art
                 'id' => $item->getId(),
                 'title' => $item->getTitle(),
                 'content' => $item->getContent(),
-
+                'user' => ["id" => $item->getUser()->getId(),"name" =>  $item->getUser()->getName()],
             ];
         }
+
         return [
             'items' => $data,
             'totalProducts' => $paginator->count(),
@@ -85,6 +90,5 @@ class ArticleRepository extends ServiceEntityRepository implements \App\Test\Art
             throw new Exception('Error al almacenar el artículo: ' . $exception->getMessage());
         }
     }
-
-
 }
+

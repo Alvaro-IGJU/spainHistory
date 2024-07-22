@@ -23,7 +23,8 @@ class ArticleController
         $page = $request->query->getInt('page', 1);
         $itemsPerPage = $request->query->getInt('itemsPerPage', 10);
         $filter = $request->query->getString('filter', '');
-        $response = $this->handler->handler(['page'=>$page, 'itemsPerPage'=>$itemsPerPage,'filter'=>$filter]);
+        $user = $request->query->getInt('user', 0);
+        $response = $this->handler->handler(['page'=>$page, 'itemsPerPage'=>$itemsPerPage,'filter'=>$filter,'user'=>$user]);
         return new JsonResponse(['listArticles' => $response->getArticles()]);
     }
 

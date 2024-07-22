@@ -71,11 +71,42 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         return true;
     }
 
-    public function updateUser(User $user): bool
+    public function updateUser(array $userData): bool
     {
-        $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        $entityManager = $this->getEntityManager();
+        $user = $entityManager->getRepository(User::class)->find($userData["id"]);
+        if (!$user) {
+            return false;
+        }
+
+        if (isset($userData['email'])) {
+            $user->setEmail($userData['email']);
+        }
+
+        if (isset($userData['roles'])) {
+            $user->setRoles($userData['roles']);
+        }
+
+        if (isset($userData['password'])) {
+            $user->setPassword($userData['password']);
+        }
+
+        if (isset($userData['name'])) {
+            $user->setName($userData['name']);
+        }
+
+        if (isset($userData['base64Image'])) {
+            $user->setBase64Image($userData['base64Image']);
+        }
+
+        if (isset($userData['username'])) {
+            $user->setUsername($userData['username']);
+        }
+
+        $entityManager->persist($user);
+        $entityManager->flush();
 
         return true;
     }
+
 }

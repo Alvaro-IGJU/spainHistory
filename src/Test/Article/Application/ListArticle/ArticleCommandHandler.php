@@ -24,7 +24,7 @@ class ArticleCommandHandler
     public function handler(array $criteria): ArticleResponse
     {
         try {
-            $articleResponse = $this->articleRepository->getPaginatedData($criteria['page'],$criteria['itemsPerPage'],$criteria['filter']);
+            $articleResponse = $this->articleRepository->getPaginatedData($criteria['page'],$criteria['itemsPerPage'],$criteria['filter'],$criteria['user']);
 
         } catch (\Exception $exception) {
             throw new Exception($exception->getMessage());

@@ -31,6 +31,9 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $name = null;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $base64Image = null;
+
     #[ORM\OneToMany(mappedBy: 'users', targetEntity: Article::class)]
     private Collection $articles;
 
@@ -149,5 +152,48 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     public function getArticles(): Collection
     {
         return $this->articles;
+    }
+
+    public function getBase64Image(): ?string
+    {
+        return $this->base64Image;
+    }
+
+    public function setBase64Image(?string $base64Image): self
+    {
+        $this->base64Image = $base64Image;
+
+        return $this;
+    }
+
+    public static function createToObject(array $data): User
+    {
+        $user = new User();
+
+        if (isset($data['email'])) {
+            $user->setEmail($data['email']);
+        }
+
+        if (isset($data['roles'])) {
+            $user->setRoles($data['roles']);
+        }
+
+        if (isset($data['password'])) {
+            $user->setPassword($data['password']);
+        }
+
+        if (isset($data['name'])) {
+            $user->setName($data['name']);
+        }
+
+        if (isset($data['photo_profile'])) {
+            $user->setBase64Image($data['photo_profile']);
+        }
+
+        if (isset($data['username'])) {
+            $user->setUsername($data['username']);
+        }
+
+        return $user;
     }
 }

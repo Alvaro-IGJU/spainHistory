@@ -32,6 +32,13 @@ add-user:
     options:
         expose: true
 
+update-user:
+    path: /updateProfile
+    controller: App\Controller\User\UserUpdateController
+    methods: [ POST ]
+    options:
+        expose: true
+
 app_logout:
     path: /logout
     methods: GET
