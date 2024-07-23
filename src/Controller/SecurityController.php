@@ -33,6 +33,8 @@ class SecurityController extends AbstractController
             'token' => $token,
             'user_id' => $user->getId(),
             'user' => $user->getEmail(),
+            'photo' => $user->getBase64Image(),
+
         ]);
     }
 
