@@ -34,7 +34,7 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $base64Image = null;
 
-    #[ORM\OneToMany(mappedBy: 'users', targetEntity: Article::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
     private Collection $articles;
 
 

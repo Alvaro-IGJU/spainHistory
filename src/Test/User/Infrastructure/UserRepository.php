@@ -29,20 +29,23 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function getPaginatedData(int $page, int $itemsPerPage, string $filter = '', int $userId = null): array
     {
-        $query = $this->createQueryBuilder('u');
+        $queryBuilder = $this->createQueryBuilder('u')
+            ->leftJoin('u.articles', 'a')
+            ->addSelect('a'); // Asegura que los artículos se carguen
 
-//        if ($filter !== '') {
-//            $query->andWhere('a.title LIKE :filter OR a.content LIKE :filter')
-//                ->setParameter('filter', '%' . $filter . '%');
-//        }
+        if ($filter !== '') {
+            $queryBuilder->andWhere('a.title LIKE :filter OR a.content LIKE :filter')
+                ->setParameter('filter', '%' . $filter . '%');
+        }
 
         if ($userId !== null && $userId !== 0) {
-            $query->andWhere('u.id = :userId')
+            $queryBuilder->andWhere('u.id = :userId')
                 ->setParameter('userId', $userId);
         }
 
-        $query->orderBy('u.id', 'ASC')
-            ->getQuery();
+        $queryBuilder->orderBy('u.id', 'ASC');
+
+        $query = $queryBuilder->getQuery();
 
         $paginator = new Paginator($query);
         $paginator->getQuery()
@@ -58,16 +61,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 'id' => $item->getId(),
                 'name' => $item->getName(),
                 'email' => $item->getEmail(),
-                'articles' => $item->getArticles(),
+                'articles' => array_map(function($article) {
+                    return [
+                        'id' => $article->getId(),
+                        'title' => $article->getTitle(),
+                        'content' => $article->getContent(),
+                    ];
+                }, $item->getArticles()->toArray()),
                 'profile_image' => $item->getBase64Image()
             ];
         }
-
         return [
             'items' => $data,
             'totalUsers' => $paginator->count(),
         ];
     }
+
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
