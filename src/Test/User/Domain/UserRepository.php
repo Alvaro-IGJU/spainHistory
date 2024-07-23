@@ -9,5 +9,6 @@ interface UserRepository
 
     public function updateUser(array $user):bool;
 
+    public  function getPaginatedData(int $page, int $itemsPerPage, string $filter, int $userId = null): array;
 
 }

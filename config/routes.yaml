@@ -25,6 +25,15 @@ task-delete:
     options:
         expose: true
 
+get-user:
+    path: /listUsers/{id}
+    controller: App\Controller\User\UserController
+    methods: [ GET ]
+    defaults:
+        id: 0
+    options:
+        expose: true
+
 add-user:
     path: /register
     controller: App\Controller\User\RegistrationController

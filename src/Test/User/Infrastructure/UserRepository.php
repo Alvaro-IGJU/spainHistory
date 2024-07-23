@@ -4,6 +4,7 @@ namespace App\Test\User\Infrastructure;
 
 use App\Test\User\Domain\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -23,6 +24,49 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
+    }
+
+
+    public function getPaginatedData(int $page, int $itemsPerPage, string $filter = '', int $userId = null): array
+    {
+        $query = $this->createQueryBuilder('u');
+
+//        if ($filter !== '') {
+//            $query->andWhere('a.title LIKE :filter OR a.content LIKE :filter')
+//                ->setParameter('filter', '%' . $filter . '%');
+//        }
+
+        if ($userId !== null && $userId !== 0) {
+            $query->andWhere('u.id = :userId')
+                ->setParameter('userId', $userId);
+        }
+
+        $query->orderBy('u.id', 'ASC')
+            ->getQuery();
+
+        $paginator = new Paginator($query);
+        $paginator->getQuery()
+            ->setFirstResult(($page - 1) * $itemsPerPage)
+            ->setMaxResults($itemsPerPage);
+
+        $data = [];
+        foreach ($paginator as $item) {
+            /**
+             * @var User $item
+             */
+            $data[] = [
+                'id' => $item->getId(),
+                'name' => $item->getName(),
+                'email' => $item->getEmail(),
+                'articles' => $item->getArticles(),
+                'profile_image' => $item->getBase64Image()
+            ];
+        }
+
+        return [
+            'items' => $data,
+            'totalUsers' => $paginator->count(),
+        ];
     }
 
     /**

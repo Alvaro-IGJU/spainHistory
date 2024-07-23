@@ -26,10 +26,27 @@ class UserUpdateController
 
     public function __invoke(Request $request): Response
     {
-        $items = ($request->getContent());
+        // Obtiene el contenido del cuerpo de la solicitud
+        $items = $request->getContent();
+
+        // Decodifica el JSON
         $data = json_decode($items, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return new JsonResponse([
+                'error' => 'Invalid JSON',
+                'message' => json_last_error_msg()
+            ], 400);
+        }
+
+        if (is_null($data)) {
+            return new JsonResponse([
+                'error' => 'Decoded data is null'
+            ], 400);
+        }
+
         $response = $this->updateHandler->handler($data);
 
         return new JsonResponse($response->isResponse());
     }
+
 }
