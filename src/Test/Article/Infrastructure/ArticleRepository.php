@@ -56,7 +56,7 @@ class ArticleRepository extends ServiceEntityRepository implements \App\Test\Art
                 'id' => $item->getId(),
                 'title' => $item->getTitle(),
                 'content' => $item->getContent(),
-                'user' => ["id" => $item->getUser()->getId(),"name" =>  $item->getUser()->getName()],
+                'user' => ["id" => $item->getUser()->getId(),"name" =>  $item->getUser()->getName(), "photo" => $item->getUser()->getBase64Image()],
             ];
         }
 

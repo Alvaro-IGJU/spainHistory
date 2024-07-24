@@ -34,6 +34,9 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private ?string $base64Image = null;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private ?string $bannerPhoto = null;
+
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Article::class)]
     private Collection $articles;
 
@@ -166,6 +169,18 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getBannerPhoto(): ?string
+    {
+        return $this->bannerPhoto;
+    }
+
+    public function setBannerPhoto(?string $bannerPhoto): self
+    {
+        $this->bannerPhoto = $bannerPhoto;
+
+        return $this;
+    }
+
     public static function createToObject(array $data): User
     {
         $user = new User();
@@ -188,6 +203,10 @@ class User implements UserInterface,PasswordAuthenticatedUserInterface
 
         if (isset($data['photo_profile'])) {
             $user->setBase64Image($data['photo_profile']);
+        }
+
+        if (isset($data['photo_banner'])) {
+            $user->setBannerPhoto($data['photo_banner']);
         }
 
         if (isset($data['username'])) {

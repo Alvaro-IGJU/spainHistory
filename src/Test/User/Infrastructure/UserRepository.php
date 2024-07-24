@@ -68,7 +68,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                         'content' => $article->getContent(),
                     ];
                 }, $item->getArticles()->toArray()),
-                'profile_image' => $item->getBase64Image()
+                'profile_image' => $item->getBase64Image(),
+                'profile_banner' => $item->getBannerPhoto(),
             ];
         }
         return [
@@ -150,6 +151,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
         if (isset($userData['base64Image'])) {
             $user->setBase64Image($userData['base64Image']);
+        }
+
+        if (isset($userData['banner_image'])) {
+            $user->setBannerPhoto($userData['banner_image']);
         }
 
         if (isset($userData['username'])) {
